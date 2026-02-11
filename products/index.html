@@ -1,12 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Products – Givly</title>
-  <meta name="robots" content="noindex, nofollow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Givly</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #e8d5f2 50%, #d4c5f9 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #6b2d5c;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #8b4789;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+        }
+
+        .category {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(107, 45, 92, 0.15);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .category:hover {
+            box-shadow: 0 12px 30px rgba(107, 45, 92, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #d946ef 0%, #a855f7 50%, #ec4899 100%);
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .category-header:hover {
+            background: linear-gradient(135deg, #e879f9 0%, #c084fc 50%, #f472b6 100%);
+        }
+
+        .category-title {
+            color: white;
+            font-size: 1.8em;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .dropdown-icon {
+            color: white;
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-icon.open {
+            transform: rotate(180deg);
+        }
+
+        .category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: linear-gradient(to bottom, #fdf4ff 0%, #fae8ff 100%);
+        }
+
+        .category-content.open {
+            max-height: 1000px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(216, 70, 239, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(216, 70, 239, 0.2);
+            border-color: #d946ef;
+        }
+
+        .product-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .product-name {
+            color: #6b2d5c;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .product-description {
+            color: #8b4789;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .product-price {
+            color: #d946ef;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .category-title {
+                font-size: 1.3em;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Givly Products</h1>
-  <p>This page is intentionally not linked.</p>
+    <div class="container">
+        <h1>Givly Products</h1>
+        <p class="subtitle">Discover the perfect gift for everyone</p>
+
+        <!-- Tech Gifts -->
+        <div class="category">
+            <div class="category-header" onclick="toggleCategory('tech')">
+                <span class="category-title">🎮 Tech Gifts</span>
+                <span class="dropdown-icon" id="tech-icon">▼</span>
+            </div>
+            <div class="category-content" id="tech-content">
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-icon">🎧</div>
+                        <div class="product-name">Wireless Headphones</div>
+                        <div class="product-description">Premium noise-canceling headphones with 30hr battery life</div>
+                        <div class="product-price">$299</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">⌚</div>
+                        <div class="product-name">Smart Watch</div>
+                        <div class="product-description">Fitness tracking, notifications, and heart rate monitoring</div>
+                        <div class="product-price">$399</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">📱</div>
+                        <div class="product-name">Phone Accessories</div>
+                        <div class="product-description">Premium cases, chargers, and screen protectors</div>
+                        <div class="product-price">$49</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">🎮</div>
+                        <div class="product-name">Gaming Console</div>
+                        <div class="product-description">Latest generation gaming system with controllers</div>
+                        <div class="product-price">$499</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Men's Gifts -->
+        <div class="category">
+            <div class="category-header" onclick="toggleCategory('mens')">
+                <span class="category-title">👔 Men's Gifts</span>
+                <span class="dropdown-icon" id="mens-icon">▼</span>
+            </div>
+            <div class="category-content" id="mens-content">
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-icon">👔</div>
+                        <div class="product-name">Designer Tie Set</div>
+                        <div class="product-description">Luxury silk ties with matching pocket squares</div>
+                        <div class="product-price">$89</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">🎒</div>
+                        <div class="product-name">Leather Briefcase</div>
+                        <div class="product-description">Handcrafted genuine leather professional bag</div>
+                        <div class="product-price">$249</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">🕶️</div>
+                        <div class="product-name">Sunglasses</div>
+                        <div class="product-description">Polarized designer sunglasses with UV protection</div>
+                        <div class="product-price">$179</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">⌚</div>
+                        <div class="product-name">Luxury Watch</div>
+                        <div class="product-description">Swiss-made automatic timepiece</div>
+                        <div class="product-price">$899</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fashion -->
+        <div class="category">
+            <div class="category-header" onclick="toggleCategory('fashion')">
+                <span class="category-title">👗 Fashion</span>
+                <span class="dropdown-icon" id="fashion-icon">▼</span>
+            </div>
+            <div class="category-content" id="fashion-content">
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-icon">👗</div>
+                        <div class="product-name">Designer Dress</div>
+                        <div class="product-description">Elegant evening dress in multiple colors</div>
+                        <div class="product-price">$199</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">👜</div>
+                        <div class="product-name">Handbag</div>
+                        <div class="product-description">Premium leather shoulder bag</div>
+                        <div class="product-price">$329</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">👠</div>
+                        <div class="product-name">Heels</div>
+                        <div class="product-description">Comfortable designer heels for any occasion</div>
+                        <div class="product-price">$149</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">🧥</div>
+                        <div class="product-name">Winter Coat</div>
+                        <div class="product-description">Stylish and warm designer winter coat</div>
+                        <div class="product-price">$399</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Jewelry -->
+        <div class="category">
+            <div class="category-header" onclick="toggleCategory('jewelry')">
+                <span class="category-title">💍 Jewelry</span>
+                <span class="dropdown-icon" id="jewelry-icon">▼</span>
+            </div>
+            <div class="category-content" id="jewelry-content">
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-icon">💍</div>
+                        <div class="product-name">Diamond Ring</div>
+                        <div class="product-description">18K gold ring with brilliant cut diamond</div>
+                        <div class="product-price">$1,299</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">📿</div>
+                        <div class="product-name">Pearl Necklace</div>
+                        <div class="product-description">Classic freshwater pearl strand</div>
+                        <div class="product-price">$299</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">👂</div>
+                        <div class="product-name">Earrings</div>
+                        <div class="product-description">Sterling silver drop earrings with gemstones</div>
+                        <div class="product-price">$149</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">⌚</div>
+                        <div class="product-name">Bracelet</div>
+                        <div class="product-description">Elegant gold chain bracelet with charms</div>
+                        <div class="product-price">$249</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleCategory(category) {
+            const content = document.getElementById(category + '-content');
+            const icon = document.getElementById(category + '-icon');
+            
+            content.classList.toggle('open');
+            icon.classList.toggle('open');
+        }
+    </script>
 </body>
 </html>
