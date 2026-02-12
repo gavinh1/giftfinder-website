@@ -1,21 +1,353 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Givly</title>
+  <title>Givly - Find the Perfect Gift</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+
+    /* Animated background particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: float 15s infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(100px);
+        opacity: 0;
+      }
+    }
+
+    /* Main container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      animation: fadeInDown 1s ease;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 5rem;
+      color: white;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 255, 255, 0.2);
+      }
+      to {
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 50px rgba(255, 255, 255, 0.4);
+      }
+    }
+
+    .tagline {
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 30px;
+    }
+
+    /* Interactive card grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin: 50px 0;
+      animation: fadeInUp 1s ease 0.3s backwards;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card:hover {
+      transform: translateY(-15px) scale(1.05);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .card-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      display: inline-block;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .card:hover .card-icon {
+      animation: spin 0.6s ease;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg) scale(1);
+      }
+      to {
+        transform: rotate(360deg) scale(1.2);
+      }
+    }
+
+    .card h3 {
+      color: white;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 3rem;
+      }
+
+      .tagline {
+        font-size: 1rem;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Mouse follower effect */
+    .cursor-glow {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      transition: opacity 0.3s;
+    }
+  </style>
 </head>
-<body style="max-width: 850px; margin: 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.5;">
-  <h1>Givly</h1>
-  <p>Official website for Givly</p>
+<body>
+  <!-- Particle background -->
+  <div class="particles" id="particles"></div>
 
-  <nav style="margin-top: 24px;">
-      <a href="privacy/">Privacy Policy</a>
-      <a href="terms/">Terms</a>
-      <a href="contact/">Contact</a>
-    <a href="products/">Products</a>
-  </nav>
+  <!-- Mouse glow effect -->
+  <div class="cursor-glow" id="cursorGlow"></div>
 
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <h1>Givly</h1>
+      <p class="tagline">Official website for Givly - Discover the perfect gift for everyone</p>
+    </header>
 
+    <!-- Interactive cards -->
+    <div class="card-grid">
+      <a href="products/" class="card" style="text-decoration: none;">
+        <div class="card-icon">🎁</div>
+        <h3>Products</h3>
+        <p>Explore our curated collection of perfect gifts for every occasion</p>
+      </a>
+
+      <a href="privacy/" class="card" style="text-decoration: none;">
+        <div class="card-icon">🔒</div>
+        <h3>Privacy Policy</h3>
+        <p>Learn how we protect and respect your personal information</p>
+      </a>
+
+      <a href="terms/" class="card" style="text-decoration: none;">
+        <div class="card-icon">📋</div>
+        <h3>Terms</h3>
+        <p>Read our terms and conditions for using Givly</p>
+      </a>
+
+      <a href="contact/" class="card" style="text-decoration: none;">
+        <div class="card-icon">💬</div>
+        <h3>Contact</h3>
+        <p>Have questions? We'd love to hear from you</p>
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <footer style="text-align: center; margin-top: 60px; padding: 30px 20px; color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; line-height: 1.8;">
+      <p style="margin-bottom: 10px;">© 2026 Givly</p>
+      <p>GivlyOnline is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Create floating particles
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 15 + 's';
+      particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+      particlesContainer.appendChild(particle);
+    }
+
+    // Mouse glow effect
+    const cursorGlow = document.getElementById('cursorGlow');
+    let mouseX = 0;
+    let mouseY = 0;
+    let glowX = 0;
+    let glowY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animateGlow() {
+      glowX += (mouseX - glowX) * 0.1;
+      glowY += (mouseY - glowY) * 0.1;
+      cursorGlow.style.left = glowX + 'px';
+      cursorGlow.style.top = glowY + 'px';
+      requestAnimationFrame(animateGlow);
+    }
+
+    animateGlow();
+
+    // Add click ripple effect
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', function(e) {
+        const ripple = document.createElement('div');
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+        ripple.style.width = '20px';
+        ripple.style.height = '20px';
+        ripple.style.left = e.offsetX + 'px';
+        ripple.style.top = e.offsetY + 'px';
+        ripple.style.transform = 'translate(-50%, -50%)';
+        ripple.style.animation = 'ripple 0.6s ease-out';
+        ripple.style.pointerEvents = 'none';
+        
+        this.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+
+    // Add ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          width: 200px;
+          height: 200px;
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
 </body>
 </html>
