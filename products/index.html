@@ -11,6 +11,26 @@
             box-sizing: border-box;
         }
 
+        .back-button {
+            display: inline-block;
+            margin: 20px;
+            padding: 12px 24px;
+            background: rgba(30, 90, 125, 0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            border: 2px solid rgba(30, 90, 125, 0.9);
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: rgba(30, 90, 125, 0.9);
+            border-color: rgba(30, 90, 125, 1);
+            transform: scale(1.05);
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #e3f5ff 0%, #cfe9ff 50%, #8BCEF3 100%);
@@ -184,6 +204,8 @@
 </head>
 <body>
     <div class="container">
+        <a href="/" class="back-button">← Back to Home</a>
+        
         <h1>Givly Products</h1>
         <p class="subtitle">Discover the perfect gift for everyone</p>
 
